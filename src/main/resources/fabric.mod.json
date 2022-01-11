@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "isles-addons",
+  "version": "0.1 Beta",
+  "name": "isles-addons",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/isles-addons/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "thegu5.islesaddons.client.IslesAddonsClient"
+    ],
+    "main": [
+      "thegu5.islesaddons.IslesAddons"
+    ],
+    "modmenu": [
+        "thegu5.islesaddons.ModMenuIntegration"
+    ]
+      },
+  "mixins": [
+    "isles-addons.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.12.12",
+    "fabric": "*",
+    "minecraft": "1.18.1"
+  }
+}
