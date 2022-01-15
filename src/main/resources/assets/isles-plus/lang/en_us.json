@@ -1,0 +1,8 @@
+{
+  "text.autoconfig.assets.title": "Isles Plus Config",
+  "text.autoconfig.assets.option.debugloot": "Notifications for every loot drop (debugging)",
+  "text.autoconfig.assets.option.keydropnotifs": "Key drop notifications",
+  "text.autoconfig.assets.option.nightnotiftime": "Night notification time (in-game)",
+  "text.autoconfig.assets.option.nightnotifs": "Night notification toggle",
+  "text.autoconfig.assets.option.customlootnotifs": "Custom loot notifications"
+}

@@ -1,27 +1,35 @@
 {
   "schemaVersion": 1,
-  "id": "isles-addons",
-  "version": "0.1 Beta",
-  "name": "isles-addons",
-  "description": "",
-  "authors": [],
-  "contact": {},
+  "id": "isles-plus",
+  "version": "0.2",
+  "name": "isles-plus",
+  "description": "A small fabric mod with some nice features for Skyblock Isles!",
+  "authors": [
+    "thegu5"
+  ],
+  "contributors": [
+    "wechandoit"
+  ],
+  "contact": {
+    "sources": "https://github.com/thegu5/isles-plis",
+    "issues": "https://github.com/thegu5/isles-plus/issues"
+  },
   "license": "MIT",
-  "icon": "assets/isles-addons/icon.png",
+  "icon": "assets/isles-plus/icon.png",
   "environment": "*",
   "entrypoints": {
     "client": [
-      "thegu5.islesaddons.client.IslesAddonsClient"
+      "thegu5.islesplus.client.IslesPlusClient"
     ],
     "main": [
-      "thegu5.islesaddons.IslesAddons"
+      "thegu5.islesplus.IslesPlus"
     ],
     "modmenu": [
-        "thegu5.islesaddons.ModMenuIntegration"
+        "thegu5.islesplus.ModMenuIntegration"
     ]
       },
   "mixins": [
-    "isles-addons.mixins.json"
+    "isles-plus.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.12.12",

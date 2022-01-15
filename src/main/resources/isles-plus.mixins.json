@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "thegu5.islesaddons.mixin",
+  "package": "thegu5.islesplus.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
   ],
