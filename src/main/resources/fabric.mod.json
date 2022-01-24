@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "isles-plus",
-  "version": "0.2",
+  "version": "0.3",
   "name": "isles-plus",
   "description": "A small fabric mod with some nice features for Skyblock Isles!",
   "authors": [
@@ -11,7 +11,7 @@
     "wechandoit"
   ],
   "contact": {
-    "sources": "https://github.com/thegu5/isles-plis",
+    "sources": "https://github.com/thegu5/isles-plus",
     "issues": "https://github.com/thegu5/isles-plus/issues"
   },
   "license": "MIT",

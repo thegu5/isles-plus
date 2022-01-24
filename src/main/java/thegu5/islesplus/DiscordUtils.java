@@ -2,7 +2,7 @@ package thegu5.islesplus;
 
 import com.jagrosh.discordipc.entities.RichPresence;
 import com.jagrosh.discordipc.entities.pipe.PipeStatus;
-
+import thegu5.islesplus.client.IslesPlusClient;
 import java.time.OffsetDateTime;
 
 public class DiscordUtils {
@@ -11,7 +11,7 @@ public class DiscordUtils {
 
     public static void updateRPC(String firstline, String secondline)
     {
-        if(IslesPlus.ipcClient.getStatus() != PipeStatus.CONNECTED)
+        if(IslesPlusClient.ipcClient.getStatus() != PipeStatus.CONNECTED)
         {
             System.out.println("not connected sadge");
             return;
@@ -21,11 +21,11 @@ public class DiscordUtils {
         builder.setDetails(firstline)
                 .setState(secondline)
                 .setLargeImage("logo", "play.skyblockisles.com - Isles Plus");
-        builder.setStartTimestamp(lastTimestamp);
+        builder.setStartTimestamp(lastTimestamp.toEpochSecond());
 
         try
         {
-            IslesPlus.ipcClient.sendRichPresence(builder.build());
+            IslesPlusClient.ipcClient.sendRichPresence(builder.build());
             System.out.println("it should have worked by now.. :O");
         } catch (IllegalStateException e)
         {

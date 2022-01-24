@@ -8,7 +8,10 @@ import java.util.ArrayList;
 @Config(name = "assets")
 public class ModConfig implements ConfigData {
     public boolean debugloot = false;
-    public ArrayList<String> customlootnotifs = new ArrayList<String>();
-    public String nightnotiftime = "16:30";
+    public ArrayList<String> customlootnotifs = new ArrayList<>();
     public boolean nightnotifs = false;
+    public String nightnotiftime = "6:00";
+    public boolean stackchat = true;
+    public boolean fishingnotifier = true;
+    public boolean glowingparkourskulls = true;
 }

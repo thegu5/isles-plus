@@ -11,7 +11,7 @@ repositories {
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html
     // for more information about repositories.
     maven { url "https://maven.shedaniel.me/" }
-    maven {url "https://maven.terraformersmc.com/"}
+    maven { url "https://maven.terraformersmc.com/" }
     maven {
         name 'JitPack'
         url 'https://jitpack.io'
@@ -31,13 +31,11 @@ dependencies {
 
     include(modImplementation ("com.terraformersmc:modmenu:3.0.1"))
     // implementation 'com.github.thatgravyboat:DiscordIPC:d813b27'
-    include(implementation ('com.github.jagrosh:DiscordIPC:ff8c5b73ee'))
+    include(implementation ('com.github.thatgravyboat:DiscordIPC:d813b27'))
     include(implementation("org.json:json:20171018"))
     include(implementation("org.slf4j:slf4j-api:1.7.25"))
     include(implementation("com.kohlschutter.junixsocket:junixsocket-common:2.0.4"))
 
-    modImplementation files("src/main/java/thegu5/islesplus/jars/slotlock-1.0.4-BETA+1.18.jar")
-    modImplementation files("src/main/java/thegu5/islesplus/jars/no-telemetry-1.3.0.jar")
 }
 
 processResources {
