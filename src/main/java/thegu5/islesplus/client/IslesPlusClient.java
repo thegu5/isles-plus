@@ -39,7 +39,7 @@ import net.minecraft.util.Formatting;
 
 @net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public class IslesPlusClient implements ClientModInitializer {
-    public static MinecraftClient client = MinecraftClient.getInstance();
+    public static final MinecraftClient client = MinecraftClient.getInstance();
     public static ModConfig config() {
         return AutoConfig.getConfigHolder(ModConfig.class).getConfig();
     }
@@ -64,6 +64,59 @@ public class IslesPlusClient implements ClientModInitializer {
         catch(NullPointerException e) {
             return null;
         }
+    }
+    public static String getFormattingFromEnum(ModConfig.Color clr) {
+        switch(clr) {
+            case DARK_RED -> {
+                return "4";
+            }
+            case RED -> {
+                return "c";
+            }
+            case GOLD -> {
+                return "6";
+            }
+            case YELLOW -> {
+                return "e";
+            }
+            case DARK_GREEN -> {
+                return "2";
+            }
+            case GREEN -> {
+                return "a";
+            }
+            case AQUA -> {
+                return "b";
+            }
+            case DARK_AQUA -> {
+                return "3";
+            }
+            case DARK_BLUE -> {
+                return "1";
+            }
+            case BLUE -> {
+                return "9";
+            }
+            case LIGHT_PURPLE ->  {
+                return "d";
+            }
+            case DARK_PURPLE -> {
+                return "5";
+            }
+            case WHITE -> {
+                return "f";
+            }
+            case GRAY -> {
+                return "7";
+            }
+            case DARK_GRAY -> {
+                return "8";
+            }
+            case BLACK -> {
+                return "0";
+            }
+        }
+        return "something went wrong";
     }
     public static boolean onIsles() {
         try {
@@ -143,6 +196,15 @@ public class IslesPlusClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         AutoConfig.register(ModConfig.class, GsonConfigSerializer::new);
+        if (config().firstload) {
+            config().lootnotifs.lootnotifslist.add("Key");
+            config().lootnotifs.lootnotifslist.add("Rough Amethyst");
+            config().lootnotifs.lootnotifslist.add("Rough Ruby");
+            config().lootnotifs.lootnotifslist.add("Rough Celestial");
+            config().lootnotifs.lootnotifslist.add("Rough Emerald");
+            config().lootnotifs.lootnotifslist.add("Rough Diamond");
+            config().firstload = false;
+        }
 
         ClientCommandManager.DISPATCHER.register(
                 ClientCommandManager.literal("ia").executes(context -> {
@@ -188,14 +250,14 @@ public class IslesPlusClient implements ClientModInitializer {
                         } else {
                             discordAppCount++;
                             // Night notifier
-                            if (config().nightnotifs) {
-                                Pattern currtime = Pattern.compile(".*" + config().nightnotiftime + ".*");
+                            if (config().nightdropdown.nightnotifs) {
+                                Pattern currtime = Pattern.compile("^.*" + config().nightdropdown.nightnotiftime + ".*");
                                 for (String line : scoreboard) {
                                     Matcher lineMatch = currtime.matcher(line);
                                     if (lineMatch.find()) {
                                         client().player.playSound(SoundEvents.BLOCK_NOTE_BLOCK_PLING, 1, 0.5F);
                                         InGameHud hud = MinecraftClient.getInstance().inGameHud;
-                                        hud.setTitle(Text.of("§7Night time is soon!"));
+                                        hud.setTitle(Text.of("§" + getFormattingFromEnum(config().nightdropdown.nightnotifcolor) + "Night time is soon!"));
                                     }
                                 }
                             }
@@ -221,7 +283,6 @@ public class IslesPlusClient implements ClientModInitializer {
                         clientTick = 0;
                     }
                     if (config().glowingparkourskulls) {
-                        // get closest armorstand to particleLoc
                         try {
                             List<Entity> nearbyArmorStands = client.world.getOtherEntities(client.player, client.player.getBoundingBox().expand(client.gameRenderer.getViewDistance(), client.gameRenderer.getViewDistance(), client.gameRenderer.getViewDistance()), (entity -> entity.getType() == EntityType.ARMOR_STAND));
                             for (Entity en : nearbyArmorStands) {

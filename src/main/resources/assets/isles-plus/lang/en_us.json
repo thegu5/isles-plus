@@ -1,10 +1,16 @@
 {
   "text.autoconfig.assets.title": "Isles Plus Config",
-  "text.autoconfig.assets.option.debugloot": "Notifications for every loot drop (debugging)",
-  "text.autoconfig.assets.option.nightnotifs": "Night notification toggle",
-  "text.autoconfig.assets.option.nightnotiftime": "Night notification time (in-game)",
-  "text.autoconfig.assets.option.customlootnotifs": "Custom loot notifications",
   "text.autoconfig.assets.option.stackchat": "Stack duplicate chat messages",
   "text.autoconfig.assets.option.fishingnotifier": "Play sound when you stop fishing",
-  "text.autoconfig.assets.option.glowingparkourskulls": "Glowing skulls at giant's course"
+  "text.autoconfig.assets.option.glowingparkourskulls": "Glowing skulls at giant's course",
+  "text.autoconfig.assets.option.lootnotifs": "Loot notification settings",
+  "text.autoconfig.assets.option.lootnotifs.togglelootnotifs": "Toggle notifications",
+  "text.autoconfig.assets.option.lootnotifs.lootnotifslist": "Item list",
+  "text.autoconfig.assets.option.lootnotifs.debugloot": "DEBUG: Notification for every loot drop",
+  "text.autoconfig.assets.option.lootnotifs.lootnotifscolor": "Notification color",
+  "text.autoconfig.assets.option.nightdropdown": "Night notification settings",
+  "text.autoconfig.assets.option.nightdropdown.nightnotifcolor": "Notification color",
+  "text.autoconfig.assets.option.nightdropdown.nightnotifs": "Toggle notifications",
+  "text.autoconfig.assets.option.nightdropdown.nightnotiftime": "Notification (in-game) time"
+
 }

@@ -21,9 +21,6 @@
     "client": [
       "thegu5.islesplus.client.IslesPlusClient"
     ],
-    "main": [
-      "thegu5.islesplus.IslesPlus"
-    ],
     "modmenu": [
         "thegu5.islesplus.ModMenuIntegration"
     ]
