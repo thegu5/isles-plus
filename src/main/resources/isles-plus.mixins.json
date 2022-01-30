@@ -4,11 +4,11 @@
   "package": "thegu5.islesplus.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "chatHudMixin",
-    "entityMixin"
   ],
   "client": [
-    "chatPacketMixin"
+    "networkHandlerMixin",
+    "chatHudMixin",
+    "entityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

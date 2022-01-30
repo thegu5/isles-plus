@@ -13,7 +13,6 @@ public class DiscordUtils {
     {
         if(IslesPlusClient.ipcClient.getStatus() != PipeStatus.CONNECTED)
         {
-            System.out.println("not connected sadge");
             return;
         }
 

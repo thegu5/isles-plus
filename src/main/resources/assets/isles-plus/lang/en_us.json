@@ -1,7 +1,8 @@
 {
   "text.autoconfig.assets.title": "Isles Plus Config",
   "text.autoconfig.assets.option.stackchat": "Stack duplicate chat messages",
-  "text.autoconfig.assets.option.fishingnotifier": "Play sound when you stop fishing",
+  "text.autoconfig.assets.option.glowingparkourskulls.@PrefixText": "The feature above can cause lag when you right-click some entities.",
+  "text.autoconfig.assets.option.fishingnotifier": "Start/stop fishing notifications",
   "text.autoconfig.assets.option.glowingparkourskulls": "Glowing skulls at giant's course",
   "text.autoconfig.assets.option.lootnotifs": "Loot notification settings",
   "text.autoconfig.assets.option.lootnotifs.togglelootnotifs": "Toggle notifications",
@@ -11,6 +12,20 @@
   "text.autoconfig.assets.option.nightdropdown": "Night notification settings",
   "text.autoconfig.assets.option.nightdropdown.nightnotifcolor": "Notification color",
   "text.autoconfig.assets.option.nightdropdown.nightnotifs": "Toggle notifications",
-  "text.autoconfig.assets.option.nightdropdown.nightnotiftime": "Notification (in-game) time"
-
+  "text.autoconfig.assets.option.nightdropdown.nightnotiftime": "Notification (in-game) time",
+  "text.autoconfig.assets.option.gjtimer": "Gjallarhorn timer settings",
+  "text.autoconfig.assets.option.gjtimer.toggle": "Toggle the timer",
+  "text.autoconfig.assets.option.gjtimer.x": "X (left-right) position",
+  "text.autoconfig.assets.option.gjtimer.y": "Y (up-down) position",
+  "text.autoconfig.assets.option.gjtimer.color": "Color",
+  "text.autoconfig.assets.option.realmtimer": "Realm hop cooldown timer settings",
+  "text.autoconfig.assets.option.testtext": "Text text settings",
+  "text.autoconfig.assets.option.testtext.toggle": "Toggle the test text",
+  "text.autoconfig.assets.option.testtext.x": "X (left-right) position",
+  "text.autoconfig.assets.option.testtext.y": "Y (up-down) position",
+  "text.autoconfig.assets.option.testtext.color": "Color",
+  "text.autoconfig.assets.option.realmtimer.toggle": "Toggle the timer",
+  "text.autoconfig.assets.option.realmtimer.x": "X (left-right) position",
+  "text.autoconfig.assets.option.realmtimer.y": "Y (up-down) position",
+  "text.autoconfig.assets.option.realmtimer.color": "Color"
 }

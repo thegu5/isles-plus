@@ -8,9 +8,11 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
+import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MagmaCubeEntity;
@@ -24,6 +26,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import thegu5.islesplus.DiscordUtils;
 import thegu5.islesplus.ModConfig;
 
@@ -34,8 +37,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import net.minecraft.util.Formatting;
 
 @net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public class IslesPlusClient implements ClientModInitializer {
@@ -56,6 +57,12 @@ public class IslesPlusClient implements ClientModInitializer {
     public static Entity fishingHoloEntity = null;
     public static boolean justStartedFishing = false;
     public static boolean titlelengthset = false;
+    public static boolean displayGjTimer = false;
+    public static boolean displayRealmTimer = false;
+    public static int gjMinutes = 5;
+    public static int gjSeconds = 0;
+    public static int realmSeconds = 15;
+    public static String timeString = "empty";
     private final String skullSignature = "ngBEheIaXuWnZaiWkxNB8XPN8Nbuo08mDHPZWNEVs82GnKfsC6lLU/nED3VGeHUT/8pxWxwS1Zjfuh/ty0Yzd7jovVrI8qYNIrHidHoct4twJ1Nch8+NmeIY7aE9yy6EuI81x1MK90vhMmyNHYnalMYMMbZE7TizwvzKKKdpvvrK8xspzNednbyXpTbHsAUV90SjdNH5TQlaI61XT+TCPYjX7nBDBcqPLMWWzO/SVskQfPoufphgdw7uOugZPiULtoQy6TEYGIXOjvFmBcF0HlHUbhHKuxUSSr5wLhb5kMZQaUTkWAJIfH3V/1wU/vSG5T1IU4kcw3LOlFr3uUZHzzU6w+a3mAE+P7aBBsgtB0Qrw8sB/miqArNjEAz4p52Mqly1o+PTFhPvczTNzStWNHg6oDsYlzZ+xtqD/5XAr32YUHwUgFld22b4bOsYWLPd1dvT0GxMVEFDadXVYD5Omf2Qr+6dAbFbIcVN8qe+/Wo+AsYmr49VQxifCxZ3kg6RnomPSwNsIN+xGZzr42bPA4iHSMJ19uvhX1pvrw19tTJ6zvfCKgutQYx/hse5BDOADDc0ci4Og9U/aQGX33Q76SsW61Clg0a5g9rpqxTuTgcLUSMoaPvOp0goW8CetHR0DqqwzqHXIAZJNdD9bL1q3hEbzW7VwTduD5R98ELNb/Q=";
     public static MinecraftClient client() {
         try {
@@ -64,59 +71,6 @@ public class IslesPlusClient implements ClientModInitializer {
         catch(NullPointerException e) {
             return null;
         }
-    }
-    public static String getFormattingFromEnum(ModConfig.Color clr) {
-        switch(clr) {
-            case DARK_RED -> {
-                return "4";
-            }
-            case RED -> {
-                return "c";
-            }
-            case GOLD -> {
-                return "6";
-            }
-            case YELLOW -> {
-                return "e";
-            }
-            case DARK_GREEN -> {
-                return "2";
-            }
-            case GREEN -> {
-                return "a";
-            }
-            case AQUA -> {
-                return "b";
-            }
-            case DARK_AQUA -> {
-                return "3";
-            }
-            case DARK_BLUE -> {
-                return "1";
-            }
-            case BLUE -> {
-                return "9";
-            }
-            case LIGHT_PURPLE ->  {
-                return "d";
-            }
-            case DARK_PURPLE -> {
-                return "5";
-            }
-            case WHITE -> {
-                return "f";
-            }
-            case GRAY -> {
-                return "7";
-            }
-            case DARK_GRAY -> {
-                return "8";
-            }
-            case BLACK -> {
-                return "0";
-            }
-        }
-        return "something went wrong";
     }
     public static boolean onIsles() {
         try {
@@ -223,6 +177,17 @@ public class IslesPlusClient implements ClientModInitializer {
                     return 0;
                 }))
         );
+        HudRenderCallback.EVENT.register((id, cb) -> {
+            if(displayGjTimer) {
+                hud().getTextRenderer().draw(new MatrixStack(), timeString, config().gjtimer.x, config().gjtimer.y, Formatting.byName(config().gjtimer.color.name).getColorValue());
+            }
+            if (displayRealmTimer) {
+                hud().getTextRenderer().draw(new MatrixStack(), "Realm Swap Cooldown: " + realmSeconds + "s", config().realmtimer.x, config().realmtimer.y, Formatting.byName(config().realmtimer.color.name).getColorValue());
+            }
+            if (config().testtext.toggle) {
+                hud().getTextRenderer().draw(new MatrixStack(), "TEST TEXT", config().testtext.x, config().testtext.y, Formatting.byName(config().testtext.color.name).getColorValue());
+            }
+        });
         ClientTickEvents.START_CLIENT_TICK.register((listener) ->
         {
             try {
@@ -240,16 +205,40 @@ public class IslesPlusClient implements ClientModInitializer {
                         }
                     }
                     if (clientTick == 20) {
+                        // set up titles if none have been displayed before
                         if (onIsles() && !titlelengthset) {
                             hud().setTitleTicks(5, 20, 5);
                             titlelengthset = true;
                         }
+                        if(displayGjTimer) {
+                            if (gjMinutes != 0 || gjSeconds != 0) {
+                                if (gjSeconds == -1 && gjMinutes != 0) {
+                                    gjSeconds = 59;
+                                    gjMinutes--;
+                                }
+                                String secs = String.valueOf(gjSeconds);
+                                if (gjSeconds < 10) {
+                                    secs = "0" + gjSeconds;
+                                }
+                                timeString = "Gjallarhorn: " + gjMinutes + ":" + secs;
+                                gjSeconds--;
+                            } else {
+                                gjMinutes = 5;
+                                gjSeconds = 0;
+                                displayGjTimer = false;
+                            }
+                        }
+                        if(displayRealmTimer) {
+                            if(realmSeconds == 0) {
+                                displayRealmTimer = false;
+                                realmSeconds = 15;
+                            } else {
+                                realmSeconds--;
+                            }
+                        }
                         List<String> scoreboard = IslesPlusClient.getScoreboard();
-                        if (scoreboard == null) {
-                            System.out.println("Scoreboard null :(");
-                        } else {
+                        if (scoreboard != null) {
                             discordAppCount++;
-                            // Night notifier
                             if (config().nightdropdown.nightnotifs) {
                                 Pattern currtime = Pattern.compile("^.*" + config().nightdropdown.nightnotiftime + ".*");
                                 for (String line : scoreboard) {
@@ -257,7 +246,7 @@ public class IslesPlusClient implements ClientModInitializer {
                                     if (lineMatch.find()) {
                                         client().player.playSound(SoundEvents.BLOCK_NOTE_BLOCK_PLING, 1, 0.5F);
                                         InGameHud hud = MinecraftClient.getInstance().inGameHud;
-                                        hud.setTitle(Text.of("§" + getFormattingFromEnum(config().nightdropdown.nightnotifcolor) + "Night time is soon!"));
+                                        hud.setTitle(Text.of("§" + config().nightdropdown.nightnotifcolor.code + "Night time is soon!"));
                                     }
                                 }
                             }
@@ -306,11 +295,12 @@ public class IslesPlusClient implements ClientModInitializer {
             }
             UseEntityCallback.EVENT.register((player, world, hand, entity, ear) -> {
                 try {
-                    if (config().fishingnotifier) {
+                    if(config().fishingnotifier) {
                         if (onIsles() && !isFishing && entity.getType() == EntityType.MAGMA_CUBE && !justStartedFishing) {
                             if (client.player.getInventory().getEmptySlot() > -1 && ((MagmaCubeEntity) entity).getSize() > 1 && getFishingHoloEntity(entity) != null) {
                                 isFishing = true;
                                 justStartedFishing = true;
+                                client.player.sendMessage(getMessage("You have started fishing!", 'e'), false);
                                 fishingEntity = entity;
                                 fishingHoloEntity = getFishingHoloEntity(entity);
                             }
