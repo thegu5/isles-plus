@@ -50,7 +50,7 @@ public class networkHandlerMixin {
     }
     @Inject(at = @At("HEAD"), method = "onPlaySound")
     public void onPlaySound(PlaySoundS2CPacket packet, CallbackInfo ci) {
-        if (config().gjtimer.toggle && packet.getSound().equals(SoundEvents.BLOCK_CONDUIT_DEACTIVATE)) {
+        if (config().gjtimer.toggle && packet.getSound().equals(SoundEvents.EVENT_RAID_HORN)) {
             displayGjTimer = true;
             gjMinutes = 5;
             gjSeconds = 0;
